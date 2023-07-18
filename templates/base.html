@@ -36,11 +36,8 @@
             <div class="navbar-menu" id="navMenu">
                 <div class="navbar-start">
                     {% if user.is_authenticated and user.is_admin %}
-                    <a class="navbar-item" href="{% url 'crearProducto' %}">
-                        Agregar Producto
-                    </a>
 
-                    <a class="navbar-item" href="{% url 'dashboardMain' %}">
+                    <a class="btn btn-warning m-2 p-2 navbar-item" role="button"  href="{% url 'dashboardMain' %}">
                         Dashboard
                     </a>
                     

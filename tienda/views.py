@@ -92,41 +92,33 @@ def crearProducto(request):
             request.POST or None, request.FILES or None)
         if formCatalogo.is_valid():
             formCatalogo.save()
-            return redirect('crearProducto')
+            return redirect('dashboardMain')
         return render(request, 'crearProducto.html', {'formCatalogo': formCatalogo})
     else:
         return HttpResponse("No tiene permisos para acceder a esta página")
 
-
-def crearProducto(request):
+def editarProducto(request, id):
     user = request.user
     if user.is_authenticated and user.is_admin:
-        formCatalogo = ProductoForm(
-            request.POST or None, request.FILES or None)
+        producto = Producto.objects.get(idProducto=id)
+        formCatalogo = ProductoForm(request.POST or None, request.FILES or None, instance=producto)
         if formCatalogo.is_valid():
             formCatalogo.save()
-            return redirect('crearProducto')
+            return redirect('dashboardMain')
         return render(request, 'crearProducto.html', {'formCatalogo': formCatalogo})
     else:
         return HttpResponse("No tiene permisos para acceder a esta página")
 
-def editar(request, id):
-    pedidos = Pedido.objects.get(idPedido=id)
-    formulario = PedidoForm(request.POST or None, instance=pedidos)
-    if formulario.is_valid and request.POST:
-        formulario.save()
-        return redirect('pedidos')
-    return render(request, 'pedidos/crear.html', {'formulario':formulario})
+def eliminarProducto(request, id):
+    user = request.user
+    if user.is_authenticated and user.is_admin:
+        producto = Producto.objects.get(idProducto=id)
+        producto.delete()
+        messages.success(request, '¡Item eliminado!')
+        return redirect('dashboardMain')
 
-
-def eliminar(request, id):
-    pedidos = Pedido.objects.get(idPedido=id)
-    if pedidos.is_valid and request.POST:
-        pedidos.delete()
-        return redirect('pedidos')
-    messages.success(request, '¡Item eliminado!')
-
-    return redirect('/')
+    else:
+        return HttpResponse("No tiene permisos para acceder a esta página")
 
 def dashboardMain(request):
     user = request.user

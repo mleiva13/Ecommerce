@@ -31,17 +31,10 @@
             <td>{{p.precioProducto}}</td>
             <td>{{p.stock}}</td>
             <td>
-                <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                    Button with data-bs-target
-                </button>
+              <a href="{% url 'editarProducto' p.idProducto %}" class="btn btn-primary btn-sm active" role="button" aria-pressed="true">Editar</a>
+              <a href="{% url 'eliminarProducto' p.idProducto %}" class="btn btn-danger btn-sm active" role="button" aria-pressed="true">Eliminar</a>
             </td>
-            
         </tr>
-        <div class="collapse" id="collapseExample">
-            <div class="card card-body">
-                {% include 'formCatalogo.html'  %} 
-            </div>
-          </div>
         {% elif p.stock <= 5 %}
         <tr class="table-warning">
             <td>{{p.idProducto}}</td>
@@ -49,7 +42,9 @@
             <td>{{p.autor}}</td>
             <td>{{p.precioProducto}}</td>
             <td>{{p.stock}}</td>
-            <td></td>
+            <td><a href="{% url 'editarProducto' p.idProducto %}" class="btn btn-primary btn-sm active" role="button" aria-pressed="true">Editar</a>
+              <a href="{% url 'eliminarProducto' p.idProducto %}" class="btn btn-danger btn-sm active" role="button" aria-pressed="true">Eliminar</a>
+            </td>
         </tr>
         {% else %}
         <tr class="table-success">
@@ -58,12 +53,15 @@
             <td>{{p.autor}}</td>
             <td>{{p.precioProducto}}</td>
             <td>{{p.stock}}</td>
-            <td></td>
+            <td>
+              <a href="{% url 'editarProducto' p.idProducto %}" class="btn btn-primary btn-sm active" role="button" aria-pressed="true">Editar</a>
+              <a href="{% url 'eliminarProducto' p.idProducto %}" class="btn btn-danger btn-sm active" role="button" aria-pressed="true">Eliminar</a>
+            </td>
         </tr>
         {% endif %}
       {% endfor %}
     </tbody>
   </table>
 </div>
-{% include 'formCatalogo.html'  %} 
+
 {% endblock %}
